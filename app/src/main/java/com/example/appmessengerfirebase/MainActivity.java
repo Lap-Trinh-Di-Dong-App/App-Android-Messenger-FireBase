@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user.getImage().equals("default")) {
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Glide.with(MainActivity.this).load(user.getImage()).into(profile_image);
+                    Glide.with(getApplicationContext()).load(user.getImage()).into(profile_image);
                 }
             }
 
@@ -128,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 return true;
             case R.id.user_profile:
-                Intent itent = new Intent(MainActivity.this, UserProfileActivity.class);
-                startActivity(itent);
+                startActivity(new Intent(MainActivity.this,UserProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 return true;
 
 

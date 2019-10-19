@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 // Thông tin người dùng sẽ được chuyển qua từ User
 // Part 7
 // Gởi tin nhắn và lưu tin nhắn trên Firebase
-// Part 8RecycleView
+// Part 8 RecycleView
 // Hiển thị tin nhắn lên RecycleView
 
 public class MessageActivity extends AppCompatActivity {
@@ -59,6 +59,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recycleView;
     // over Part 8
 
+    ValueEventListener seenListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +137,7 @@ public class MessageActivity extends AppCompatActivity {
                 if(user.getImage().equals("default")){
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Glide.with(MessageActivity.this).load(user.getImage()).into(profile_image);
+                    Glide.with(getApplicationContext()).load(user.getImage()).into(profile_image);
                 }
 
                 readMessage(firebaseUser.getUid(), userid, user.getImage());
@@ -149,6 +150,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        // Cập nhật thuộc tính isSeen
+        seenMessage(userid);
 
     }
 
@@ -162,11 +165,11 @@ public class MessageActivity extends AppCompatActivity {
         hashmap.put("sender", sender);
         hashmap.put("receiver",receiver);
         hashmap.put("message",message);
-
+        hashmap.put("isSeen",false);
         reference.child("Chats").push().setValue(hashmap);
     }
 
-    // Part 8 Đọc tin nhắn từ firebase và hiển thị lên
+    // Part 8 Đọc tin nhắn từ firebase và hiển thị lên Recycle
     private void readMessage(final String myid, final String userid, final String image){
         mchat = new ArrayList<>();
 
@@ -213,9 +216,34 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
+        reference.removeEventListener(seenListener);
         status("offline");
     }
-
     // Over Part 12
 
+    // part 14
+    // Hàm cập nhật thuộc tính isSeen trong Bảng Chats mỗi khi người nhận ở tin nhắn
+    private void  seenMessage(final String userID) {
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    // Truyền dữ liệu từ FireBase xuống class Chat
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if(chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userID)) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isSeen",true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    // over part 14
 }

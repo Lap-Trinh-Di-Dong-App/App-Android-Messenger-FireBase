@@ -66,6 +66,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         } else {
             Glide.with(mContext).load(image).into(holder.profile_image);
         }
+
+        // Part 14 Gán giá trị hiển thị thông báo nhỏ khi gởi và xem tin nhắn cho người gửi
+        // Chỉ hiển thị thông báo ở tin nhắn cuối cùng của người gửi
+        if (position == mChat.size() - 1) {
+            if(chat.getisSeen())
+                holder.txt_Seen.setText("Đã Xem");
+            else
+                holder.txt_Seen.setText("Đang Gửi");
+        } else
+            holder.txt_Seen.setVisibility(View.GONE);
+        // Over Part 14
     }
 
     // đếm sô tài khoản trênm Firebase khác với tài khoản đang sử dụng
@@ -80,12 +91,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public TextView show_message;
         public ImageView profile_image;
+        public TextView txt_Seen;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
+            txt_Seen = itemView.findViewById(R.id.txt_Seen);
+
         }
     }
 
