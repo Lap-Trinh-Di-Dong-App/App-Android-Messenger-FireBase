@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,10 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 // Part 3 Auto Login User đã Login
 
 
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
 
     MaterialEditText email, passWord;
     Button btn_login;
+    TextView forgot_Password;
 
     FirebaseAuth auth;
 
@@ -46,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         passWord = findViewById(R.id.passWord);
         btn_login = findViewById(R.id.btn_login);
+        forgot_Password = findViewById(R.id.forgot_password);
+
+        forgot_Password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
 
         // Sự kiện click button Login
         btn_login.setOnClickListener(new View.OnClickListener() {

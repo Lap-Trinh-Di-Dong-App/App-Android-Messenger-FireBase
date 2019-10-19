@@ -32,8 +32,8 @@
         android:id="@+id/image_on"
         android:visibility="gone"
         android:layout_below="@+id/userName"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginLeft="250dp"
         android:layout_toRightOf="@+id/profile_image_userItem"
         android:layout_toEndOf="@+id/profile_image_userItem"
         android:src="@mipmap/ic_launcher"/>

@@ -29,12 +29,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private Context mContext;
     private List<User> mUsers; // danh sách người dùng
-    private boolean isChat;
 
-    public UserAdapter(Context mContext, List<User> mUsers, boolean isChat) {
+    public UserAdapter(Context mContext, List<User> mUsers) {
         this.mContext = mContext;
         this.mUsers = mUsers;
-        this.isChat = isChat;
     }
 
     @NonNull
@@ -58,7 +56,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         // part 12
-        if(isChat) {
+        // Hiển thị dấu chấm trạng thái khi tài khoản
             if(user.getStatus().equals("online")) {
                 holder.image_on.setVisibility(View.VISIBLE);
                 holder.image_off.setVisibility(View.GONE);
@@ -66,10 +64,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 holder.image_on.setVisibility(View.GONE);
                 holder.image_off.setVisibility(View.VISIBLE);
             }
-        } else {
-            holder.image_on.setVisibility(View.GONE);
-            holder.image_off.setVisibility(View.GONE);
-        }
         // Over Part 12
 
         // Part 6 this is event it

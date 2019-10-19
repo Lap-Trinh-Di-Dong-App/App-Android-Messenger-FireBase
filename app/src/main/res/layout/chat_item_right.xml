@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -22,11 +23,21 @@
             android:background="@drawable/background_right"
             android:text="What"
             android:textColor="#fff"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:id="@+id/show_message"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:padding="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_Seen"
+            android:text="đã gửi"
+            android:layout_below="@+id/show_message"
+            android:layout_alignParentRight="true"
+            />
+
 
     </RelativeLayout>
 
